@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Authorization callback — RecapHub Uploader</title>
+<style>body{font-family:system-ui,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.65;color:#1a1a2e}code{background:#f4f4f8;padding:2px 8px;border-radius:6px;word-break:break-all}#box{border:1px solid #ddd;border-radius:12px;padding:16px;margin-top:16px}</style>
+</head>
+<body>
+<h1>RecapHub Uploader — TikTok authorization</h1>
+<div id="box">Waiting for TikTok…</div>
+<script>
+(function(){
+  var box=document.getElementById('box');
+  var p=new URLSearchParams(location.search);
+  var code=p.get('code'), err=p.get('error'), desc=p.get('error_description');
+  if(err){box.innerHTML='<b>Authorization failed.</b><br>'+escapeHtml(err)+(desc?': '+escapeHtml(desc):'');return;}
+  if(code){box.innerHTML='<b>Success.</b> Copy this authorization code into the uploader setup:<br><br><code>'+escapeHtml(code)+'</code>';return;}
+  box.textContent='No authorization code in this URL. Start the login from the app first.';
+  function escapeHtml(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+})();
+</script>
+</body>
+</html>
